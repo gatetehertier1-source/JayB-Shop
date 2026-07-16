@@ -69,3 +69,6 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`JayB Shop running at http://localhost:${PORT}`);
 });
+
+// ---------- Export for Vercel Serverless ----------
+module.exports = app;
