@@ -1,0 +1,35 @@
+<%- include('partials/header', { title }) %>
+
+<span class="eyebrow">Keep Buyers Informed</span>
+<h2 style="margin-bottom:24px;">Announcements</h2>
+
+<form action="/admin/announcements/new" method="POST" style="max-width:640px; margin-bottom:36px;">
+  <div class="field">
+    <label>Title</label>
+    <input type="text" name="title" placeholder="e.g. New Autumn Collection Arriving Soon" required />
+  </div>
+  <div class="field">
+    <label>Message</label>
+    <textarea name="message" placeholder="Tell buyers what's coming, when to expect restocks, etc." required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Post Announcement</button>
+</form>
+
+<% if (announcements.length === 0) { %>
+  <div class="empty-state">No announcements posted yet.</div>
+<% } else { %>
+  <% announcements.forEach(function(a) { %>
+    <div class="announcement-item" style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+      <div>
+        <div class="date"><%= new Date(a.createdAt).toDateString() %></div>
+        <h3 style="margin:8px 0;"><%= a.title %></h3>
+        <p style="color:var(--ivory-dim); margin:0;"><%= a.message %></p>
+      </div>
+      <form action="/admin/announcements/<%= a.id %>/delete" method="POST" onsubmit="return confirm('Delete this announcement?');">
+        <button type="submit" class="btn btn-sm btn-wine">Delete</button>
+      </form>
+    </div>
+  <% }) %>
+<% } %>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,32 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <div class="form-card">
+    <span class="eyebrow">Welcome Back</span>
+    <h2 style="margin-bottom:24px;">Log In</h2>
+
+    <% if (errors && errors.length) { %>
+      <div class="alert alert-error">
+        <% errors.forEach(function(e) { %><div><%= e %></div><% }) %>
+      </div>
+    <% } %>
+
+    <form action="/login" method="POST" data-loading-text="Logging in&hellip;">
+      <div class="field">
+        <label>Email or Phone Number</label>
+        <input type="text" name="identifier" value="<%= form.identifier || '' %>" required />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" required />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Log In</button>
+    </form>
+
+    <p style="text-align:center; margin-top:20px; font-size:14px; color:var(--ivory-dim);">
+      New to JayB Shop? <a href="/signup" style="color:var(--brass); text-decoration:underline;">Create an account</a>
+    </p>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,25 @@
+<%- include('partials/header', { title }) %>
+
+<span class="eyebrow">Inbox</span>
+<h2 style="margin-bottom:28px;">Contact Messages</h2>
+
+<% if (messages.length === 0) { %>
+  <div class="empty-state">No messages yet.</div>
+<% } else { %>
+  <% messages.forEach(function(m) { %>
+    <div class="announcement-item" style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; border-left-color: <%= m.read ? 'var(--stone)' : 'var(--brass)' %>;">
+      <div>
+        <div class="date"><%= new Date(m.createdAt).toLocaleString() %> <% if (!m.read) { %><span class="badge badge-proceeding" style="margin-left:8px;">New</span><% } %></div>
+        <h3 style="margin:8px 0; font-size:16px;"><%= m.name %> &mdash; <span style="color:var(--stone); font-weight:400; font-size:13px;"><%= m.contactInfo %></span></h3>
+        <p style="color:var(--ivory-dim); margin:0;"><%= m.message %></p>
+      </div>
+      <% if (!m.read) { %>
+        <form action="/admin/messages/<%= m.id %>/read" method="POST">
+          <button type="submit" class="btn btn-sm btn-outline">Mark Read</button>
+        </form>
+      <% } %>
+    </div>
+  <% }) %>
+<% } %>
+
+<%- include('partials/footer') %>

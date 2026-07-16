@@ -1,0 +1,28 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">The Collection</span>
+      <h2>Shop All Clothing</h2>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="/shop" class="btn btn-sm <%= activeCategory === 'all' ? 'btn-primary' : 'btn-outline' %>">All</a>
+      <% categories.forEach(function(cat) { %>
+        <a href="/shop?category=<%= encodeURIComponent(cat) %>" class="btn btn-sm <%= activeCategory === cat ? 'btn-primary' : 'btn-outline' %>"><%= cat %></a>
+      <% }) %>
+    </div>
+  </div>
+
+  <% if (products.length === 0) { %>
+    <div class="empty-state reveal">No products found in this category yet.</div>
+  <% } else { %>
+    <div class="product-grid" data-stagger>
+      <% products.forEach(function(product) { %>
+        <%- include('partials/product-card', { product }) %>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

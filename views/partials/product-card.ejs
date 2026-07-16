@@ -1,0 +1,22 @@
+<a href="/product/<%= product.id %>" class="card" data-tilt>
+  <div class="card-media">
+    <% if (product.imageUrl) { %>
+      <img src="<%= product.imageUrl %>" alt="<%= product.name %>" loading="lazy" />
+    <% } else { %>
+      <span class="placeholder-mark">JayB Shop</span>
+    <% } %>
+    <% if (product.bundlesInStock <= 0) { %>
+      <span class="hang-tag out">Sold Out</span>
+    <% } else if (product.bundlesInStock <= 2) { %>
+      <span class="hang-tag low"><%= product.bundlesInStock %> bundle<%= product.bundlesInStock === 1 ? '' : 's' %> left</span>
+    <% } else { %>
+      <span class="hang-tag"><%= product.bundlesInStock %> bundles left</span>
+    <% } %>
+    <span class="quick-view">View Product</span>
+  </div>
+  <div class="card-body">
+    <div class="cat"><%= product.category %></div>
+    <h3><%= product.name %></h3>
+    <div><span class="price"><%= formatRWF(product.pricePerBundle) %></span><span class="per-bundle">/ bundle of <%= product.piecesPerBundle %></span></div>
+  </div>
+</a>

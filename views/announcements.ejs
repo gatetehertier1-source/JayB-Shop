@@ -1,0 +1,22 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container" style="max-width:820px;">
+  <span class="eyebrow reveal">Stay Updated</span>
+  <h2 class="reveal" style="margin-bottom:28px;">Announcements</h2>
+
+  <% if (announcements.length === 0) { %>
+    <div class="empty-state reveal">No announcements yet. Check back soon for news on new arrivals.</div>
+  <% } else { %>
+    <div data-stagger>
+      <% announcements.forEach(function(a) { %>
+        <div class="announcement-item">
+          <div class="date"><%= new Date(a.createdAt).toDateString() %></div>
+          <h3 style="margin:8px 0;"><%= a.title %></h3>
+          <p style="color:var(--ivory-dim); margin:0;"><%= a.message %></p>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

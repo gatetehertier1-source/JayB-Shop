@@ -1,0 +1,46 @@
+<%- include('partials/header', { title }) %>
+
+<span class="eyebrow">Overview</span>
+<h2 style="margin-bottom:28px;">Dashboard</h2>
+
+<div class="stat-grid">
+  <div class="stat-card"><div class="num" data-count="<%= stats.totalProducts %>">0</div><div class="label">Products Listed</div></div>
+  <div class="stat-card"><div class="num" data-count="<%= stats.totalBundlesInStock %>">0</div><div class="label">Bundles In Stock</div></div>
+  <div class="stat-card"><div class="num" data-count="<%= stats.outOfStock %>">0</div><div class="label">Out of Stock</div></div>
+  <div class="stat-card"><div class="num" data-count="<%= stats.totalBuyers %>">0</div><div class="label">Registered Buyers</div></div>
+  <div class="stat-card"><div class="num" data-count="<%= stats.totalOrders %>">0</div><div class="label">Total Orders</div></div>
+  <div class="stat-card"><div class="num" data-count="<%= stats.proceedingOrders %>">0</div><div class="label">Awaiting Confirmation</div></div>
+  <div class="stat-card"><div class="num" data-count="<%= stats.confirmedOrders %>">0</div><div class="label">Confirmed &amp; Paid</div></div>
+  <div class="stat-card"><div class="num" data-count="<%= stats.unreadMessages %>">0</div><div class="label">Unread Messages</div></div>
+</div>
+
+<div class="section-head">
+  <h3>Recent Orders</h3>
+  <a href="/admin/orders" class="btn btn-outline btn-sm">View All Orders</a>
+</div>
+
+<% if (recentOrders.length === 0) { %>
+  <div class="empty-state">No orders yet.</div>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Order</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+      <tbody>
+        <% recentOrders.forEach(function(o) { %>
+          <tr>
+            <td>#<%= o.id %></td>
+            <td><%= o.items.map(i => i.productName + ' x' + i.quantity).join(', ') %></td>
+            <td><%= formatRWF(o.total) %></td>
+            <td>
+              <span class="badge <%= o.status === 'confirmed' ? 'badge-confirmed' : (o.status === 'cancelled' ? 'badge-cancelled' : 'badge-proceeding') %>">
+                <%= o.status === 'confirmed' ? 'Confirmed' : (o.status === 'cancelled' ? 'Cancelled' : 'Proceeding') %>
+              </span>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

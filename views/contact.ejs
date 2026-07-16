@@ -1,0 +1,43 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <div class="two-col reveal">
+    <div>
+      <span class="eyebrow">Get In Touch</span>
+      <h2 style="margin-bottom:16px;">Contact Us</h2>
+      <p style="color:var(--ivory-dim); margin-bottom:24px;">Have a question about a bundle, an order, or a stockist partnership? Send us a message, or reach us directly on WhatsApp.</p>
+      <div class="tape">
+        <div class="tape-row"><span>Location</span><b>Kigali, Nyarugenge</b></div>
+        <div class="tape-row"><span>Landmark</span><b>At Charitsie Matheus</b></div>
+        <div class="tape-row"><span>WhatsApp</span><b>0796 164 748</b></div>
+      </div>
+      <a href="https://wa.me/250796164748" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:20px; background:var(--success); color:#0d1a12;">Message Us on WhatsApp</a>
+    </div>
+
+    <div class="form-card" style="max-width:none;">
+      <% if (sent) { %>
+        <div class="alert alert-success">Thank you — your message has been sent. We'll get back to you soon.</div>
+      <% } %>
+      <% if (errors && errors.length) { %>
+        <div class="alert alert-error"><% errors.forEach(function(e) { %><div><%= e %></div><% }) %></div>
+      <% } %>
+      <form action="/contact" method="POST" data-loading-text="Sending&hellip;">
+        <div class="field">
+          <label>Your Name</label>
+          <input type="text" name="name" required />
+        </div>
+        <div class="field">
+          <label>Email or Phone Number</label>
+          <input type="text" name="contactInfo" required />
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="brand">JayB<span>Shop</span></div>
+    <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--stone); margin-bottom:20px;">Admin Portal</div>
+    <nav class="admin-nav">
+      <a href="/admin" class="<%= currentPath === '/admin' || currentPath === '/admin/' ? 'active' : '' %>">Dashboard</a>
+      <a href="/admin/products" class="<%= currentPath.startsWith('/admin/products') ? 'active' : '' %>">Products</a>
+      <a href="/admin/orders" class="<%= currentPath.startsWith('/admin/orders') ? 'active' : '' %>">Orders</a>
+      <a href="/admin/buyers" class="<%= currentPath.startsWith('/admin/buyers') ? 'active' : '' %>">Buyers</a>
+      <a href="/admin/announcements" class="<%= currentPath.startsWith('/admin/announcements') ? 'active' : '' %>">Announcements</a>
+      <a href="/admin/messages" class="<%= currentPath.startsWith('/admin/messages') ? 'active' : '' %>">Messages</a>
+      <a href="/admin/settings" class="<%= currentPath.startsWith('/admin/settings') ? 'active' : '' %>">Settings</a>
+    </nav>
+    <div style="margin-top:30px; padding-top:20px; border-top:1px solid var(--line);">
+      <a href="/" style="font-size:13px; color:var(--stone);">&larr; View Site</a>
+      <form action="/admin/logout" method="POST" style="margin-top:12px;">
+        <button type="submit" class="btn btn-sm btn-wine btn-block">Log Out</button>
+      </form>
+    </div>
+  </aside>
+  <main class="admin-main">

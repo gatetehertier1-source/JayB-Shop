@@ -1,0 +1,41 @@
+<%- include('partials/header', { title }) %>
+
+<div class="section-head">
+  <div>
+    <span class="eyebrow">Inventory</span>
+    <h2>Products</h2>
+  </div>
+  <a href="/admin/products/new" class="btn btn-primary">+ Add Product</a>
+</div>
+
+<% if (products.length === 0) { %>
+  <div class="empty-state">No products yet. Click "Add Product" to list your first bundle.</div>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Category</th><th>Price / Bundle</th><th>Pieces / Bundle</th><th>Bundles In Stock</th><th></th></tr></thead>
+      <tbody>
+        <% products.forEach(function(p) { %>
+          <tr>
+            <td><%= p.name %></td>
+            <td><%= p.category %></td>
+            <td><%= formatRWF(p.pricePerBundle) %></td>
+            <td><%= p.piecesPerBundle %></td>
+            <td>
+              <%= p.bundlesInStock %>
+              <% if (p.bundlesInStock <= 0) { %><span class="badge badge-cancelled">Out of Stock</span><% } else if (p.bundlesInStock <= 2) { %><span class="badge badge-proceeding">Low</span><% } %>
+            </td>
+            <td style="display:flex; gap:8px;">
+              <a href="/admin/products/<%= p.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+              <form action="/admin/products/<%= p.id %>/delete" method="POST" onsubmit="return confirm('Delete this product?');">
+                <button type="submit" class="btn btn-sm btn-wine">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

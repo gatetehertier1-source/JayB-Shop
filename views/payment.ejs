@@ -1,0 +1,59 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <span class="eyebrow">Order #<%= order.id %></span>
+  <h2 style="margin-bottom:6px;">Complete Your Payment</h2>
+  <p style="color:var(--ivory-dim); margin-bottom:32px;">Your bundle has been reserved. Talk to us on WhatsApp to confirm, then pay using any option below.</p>
+
+  <div class="two-col reveal">
+    <div>
+      <div class="table-wrap" style="margin-bottom:24px;">
+        <table>
+          <thead><tr><th>Item</th><th>Bundles</th><th>Subtotal</th></tr></thead>
+          <tbody>
+            <% order.items.forEach(function(it) { %>
+              <tr><td><%= it.productName %></td><td><%= it.quantity %></td><td><%= formatRWF(it.subtotal) %></td></tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="tape" style="margin-bottom:24px;">
+        <div class="tape-row"><span>Total</span><b><%= formatRWF(order.total) %></b></div>
+        <div class="tape-row">
+          <span>Status</span>
+          <span class="badge <%= order.status === 'confirmed' ? 'badge-confirmed' : (order.status === 'cancelled' ? 'badge-cancelled' : 'badge-proceeding') %>">
+            <%= order.status === 'confirmed' ? 'Confirmed' : (order.status === 'cancelled' ? 'Cancelled' : 'Proceeding') %>
+          </span>
+        </div>
+        <% if (order.status === 'confirmed') { %>
+          <div class="tape-row"><span>Payment</span><span class="badge badge-paid">Paid</span></div>
+        <% } %>
+      </div>
+
+      <a href="<%= whatsappLink %>" target="_blank" rel="noopener" class="btn btn-primary btn-block" style="background:var(--success); color:#0d1a12;">
+        Chat on WhatsApp to Confirm
+      </a>
+      <p style="font-size:12px; color:var(--stone); margin-top:10px; text-align:center;">You'll be redirected to WhatsApp (0796 164 748) with your order details pre-filled.</p>
+    </div>
+
+    <div>
+      <h3 style="margin-bottom:16px;">Ways to Pay</h3>
+      <div class="tape" style="margin-bottom:16px;">
+        <div class="tape-row"><span>MTN Mobile Money</span><b><%= settings.momoNumber %></b></div>
+        <div class="tape-row"><span>Airtel Money</span><b><%= settings.airtelNumber %></b></div>
+      </div>
+      <div class="tape">
+        <div class="tape-row"><span>Bank</span><b><%= settings.bankName %></b></div>
+        <div class="tape-row"><span>Account Name</span><b><%= settings.bankAccountName %></b></div>
+        <div class="tape-row"><span>Account Number</span><b><%= settings.bankAccountNumber %></b></div>
+      </div>
+      <p style="font-size:13px; color:var(--stone); margin-top:16px;">Once we confirm your payment on WhatsApp, your order status here will update to <b style="color:var(--success)">Confirmed</b> and show as <b style="color:var(--success)">Paid</b>.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <a href="/account/orders" class="btn btn-outline">View All My Orders</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

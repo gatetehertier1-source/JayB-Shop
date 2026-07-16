@@ -1,0 +1,53 @@
+<%- include('partials/header', { title }) %>
+
+<section class="hero">
+  <span class="hero-orb hero-orb--1"></span>
+  <span class="hero-orb hero-orb--2"></span>
+  <span class="hero-orb hero-orb--3"></span>
+  <span class="hero-orb hero-orb--4"></span>
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Kigali &middot; Nyarugenge</span>
+      <h1>Clothing sold the way tailors have always trusted &mdash; by the bundle.</h1>
+      <p class="lede">JayB Shop brings you carefully sourced clothing in fixed bundles, so every piece you get is part of a matched set. Reserve your bundle, confirm on WhatsApp, and we'll hold your order.</p>
+      <div class="hero-actions">
+        <a href="/shop" class="btn btn-primary">Shop the Collection</a>
+        <a href="/announcements" class="btn btn-outline">Latest Announcements</a>
+      </div>
+    </div>
+    <div class="tape">
+      <div class="tape-row"><span>How it works</span><b>3 steps</b></div>
+      <div class="tape-row"><span>1. Add a bundle to your cart</span><span>&rarr;</span></div>
+      <div class="tape-row"><span>2. Log in &amp; press Buy</span><span>&rarr;</span></div>
+      <div class="tape-row"><span>3. Confirm on WhatsApp &amp; pay</span><span>&#10003;</span></div>
+      <% if (latestAnnouncement) { %>
+        <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--line);">
+          <span class="eyebrow">Announcement</span>
+          <p style="margin:8px 0 0; color:var(--ivory-dim); font-size:14px;"><%= latestAnnouncement.title %></p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">Fresh In</span>
+      <h2>Recently Added</h2>
+    </div>
+    <a href="/shop" class="btn btn-outline btn-sm">View All</a>
+  </div>
+
+  <% if (featured.length === 0) { %>
+    <div class="empty-state reveal">No products yet. The admin is preparing the next collection — check back soon.</div>
+  <% } else { %>
+    <div class="product-grid" data-stagger>
+      <% featured.forEach(function(product) { %>
+        <%- include('partials/product-card', { product }) %>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

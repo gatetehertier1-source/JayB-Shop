@@ -1,0 +1,42 @@
+<%- include('partials/header', { title }) %>
+
+<span class="eyebrow">Configuration</span>
+<h2 style="margin-bottom:24px;">Settings</h2>
+
+<% if (saved) { %>
+  <div class="alert alert-success">Settings saved.</div>
+<% } %>
+
+<form action="/admin/settings" method="POST" style="max-width:640px;">
+  <div class="field">
+    <label>WhatsApp Number (international format, no + or leading 0)</label>
+    <input type="text" name="whatsappNumber" value="<%= settings.whatsappNumber %>" placeholder="250796164748" required />
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>MTN Mobile Money Number</label>
+      <input type="text" name="momoNumber" value="<%= settings.momoNumber %>" required />
+    </div>
+    <div class="field">
+      <label>Airtel Money Number</label>
+      <input type="text" name="airtelNumber" value="<%= settings.airtelNumber %>" required />
+    </div>
+  </div>
+  <div class="field">
+    <label>Bank Name</label>
+    <input type="text" name="bankName" value="<%= settings.bankName %>" />
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Bank Account Name</label>
+      <input type="text" name="bankAccountName" value="<%= settings.bankAccountName %>" />
+    </div>
+    <div class="field">
+      <label>Bank Account Number</label>
+      <input type="text" name="bankAccountNumber" value="<%= settings.bankAccountNumber %>" />
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Save Settings</button>
+</form>
+
+<%- include('partials/footer') %>

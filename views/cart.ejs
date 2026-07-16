@@ -1,0 +1,56 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <span class="eyebrow">Checkout</span>
+  <h2 style="margin-bottom:28px;">Your Cart</h2>
+
+  <% if (error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <% if (items.length === 0) { %>
+    <div class="empty-state">Your cart is empty. <a href="/shop" style="color:var(--brass); text-decoration:underline;">Browse the collection</a>.</div>
+  <% } else { %>
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>Product</th><th>Price / Bundle</th><th>Bundles</th><th>Subtotal</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% items.forEach(function(item) { %>
+            <tr>
+              <td><a href="/product/<%= item.product.id %>"><%= item.product.name %></a></td>
+              <td><%= formatRWF(item.product.pricePerBundle) %></td>
+              <td>
+                <form action="/cart/update" method="POST" style="display:flex; gap:8px; align-items:center;">
+                  <input type="hidden" name="productId" value="<%= item.product.id %>" />
+                  <input type="number" name="quantity" value="<%= item.quantity %>" min="1" max="<%= item.product.bundlesInStock %>" style="width:70px; background:var(--charcoal); color:var(--ivory); border:1px solid var(--line); padding:6px; border-radius:2px;" />
+                  <button class="btn btn-sm btn-outline" type="submit">Update</button>
+                </form>
+              </td>
+              <td><%= formatRWF(item.subtotal) %></td>
+              <td>
+                <form action="/cart/remove" method="POST">
+                  <input type="hidden" name="productId" value="<%= item.product.id %>" />
+                  <button class="btn btn-sm btn-wine" type="submit">Remove</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; margin-top:28px;">
+      <div class="tape" style="min-width:320px;">
+        <div class="tape-row"><span>Total</span><b><%= formatRWF(total) %></b></div>
+        <form action="/cart/buy" method="POST" data-loading-text="Reserving your bundle&hellip;" style="margin-top:16px;">
+          <button type="submit" class="btn btn-primary btn-block">Buy — Talk to Us on WhatsApp</button>
+        </form>
+        <p style="font-size:12px; color:var(--stone); margin-top:10px;">You'll need to log in first. After confirming, you'll be connected with us on WhatsApp to finish payment.</p>
+      </div>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

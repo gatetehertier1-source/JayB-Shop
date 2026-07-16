@@ -1,0 +1,34 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <span class="eyebrow">Your Account</span>
+  <h2 style="margin-bottom:28px;">My Orders</h2>
+
+  <% if (orders.length === 0) { %>
+    <div class="empty-state">You haven't placed any orders yet. <a href="/shop" style="color:var(--brass); text-decoration:underline;">Start shopping</a>.</div>
+  <% } else { %>
+    <div class="table-wrap reveal">
+      <table>
+        <thead><tr><th>Order</th><th>Items</th><th>Total</th><th>Status</th><th>Payment</th><th></th></tr></thead>
+        <tbody>
+          <% orders.forEach(function(order) { %>
+            <tr>
+              <td>#<%= order.id %></td>
+              <td><%= order.items.map(i => i.productName + ' x' + i.quantity).join(', ') %></td>
+              <td><%= formatRWF(order.total) %></td>
+              <td>
+                <span class="badge <%= order.status === 'confirmed' ? 'badge-confirmed' : (order.status === 'cancelled' ? 'badge-cancelled' : 'badge-proceeding') %>">
+                  <%= order.status === 'confirmed' ? 'Confirmed' : (order.status === 'cancelled' ? 'Cancelled' : 'Proceeding') %>
+                </span>
+              </td>
+              <td><% if (order.status === 'confirmed') { %><span class="badge badge-paid">Paid</span><% } else { %>&mdash;<% } %></td>
+              <td><a href="/order/<%= order.id %>/payment" class="btn btn-sm btn-outline">View</a></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,27 @@
+<%- include('partials/header', { title }) %>
+
+<span class="eyebrow">Customers</span>
+<h2 style="margin-bottom:28px;">Registered Buyers</h2>
+
+<% if (buyers.length === 0) { %>
+  <div class="empty-state">No buyers have registered yet.</div>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Full Name</th><th>Email</th><th>Phone</th><th>Orders Placed</th><th>Joined</th></tr></thead>
+      <tbody>
+        <% buyers.forEach(function(b) { %>
+          <tr>
+            <td><%= b.fullName %></td>
+            <td><%= b.email %></td>
+            <td><%= b.phone %></td>
+            <td><%= b.orderCount %></td>
+            <td><%= new Date(b.createdAt).toDateString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

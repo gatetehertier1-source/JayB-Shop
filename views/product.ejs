@@ -1,0 +1,39 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <div class="two-col reveal">
+    <div class="card-media" style="border-radius:2px; border:1px solid var(--line);">
+      <% if (product.imageUrl) { %>
+        <img src="<%= product.imageUrl %>" alt="<%= product.name %>" />
+      <% } else { %>
+        <span class="placeholder-mark">JayB Shop</span>
+      <% } %>
+    </div>
+    <div>
+      <span class="eyebrow"><%= product.category %></span>
+      <h1 style="font-size:34px; margin-top:10px;"><%= product.name %></h1>
+      <p style="color:var(--ivory-dim); margin:16px 0 24px;"><%= product.description || 'A JayB Shop original, sold as a matched bundle.' %></p>
+
+      <div class="tape" style="margin-bottom:24px;">
+        <div class="tape-row"><span>Price per bundle</span><b><%= formatRWF(product.pricePerBundle) %></b></div>
+        <div class="tape-row"><span>Pieces per bundle</span><b><%= product.piecesPerBundle %></b></div>
+        <div class="tape-row"><span>Bundles in stock</span><b><%= product.bundlesInStock %></b></div>
+      </div>
+
+      <% if (product.bundlesInStock <= 0) { %>
+        <div class="alert alert-error">This product is currently out of stock. Check <a href="/announcements" style="text-decoration:underline;">Announcements</a> for restock updates.</div>
+      <% } else { %>
+        <form action="/cart/add" method="POST" data-loading-text="Adding&hellip;" style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+          <input type="hidden" name="productId" value="<%= product.id %>" />
+          <div class="field" style="margin-bottom:0; width:120px;">
+            <label>Bundles</label>
+            <input type="number" name="quantity" value="1" min="1" max="<%= product.bundlesInStock %>" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

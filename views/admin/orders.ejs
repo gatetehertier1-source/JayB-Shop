@@ -1,0 +1,45 @@
+<%- include('partials/header', { title }) %>
+
+<span class="eyebrow">Sales</span>
+<h2 style="margin-bottom:28px;">Orders</h2>
+
+<% if (orders.length === 0) { %>
+  <div class="empty-state">No orders yet.</div>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Order</th><th>Buyer</th><th>Contact</th><th>Items</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        <% orders.forEach(function(o) { %>
+          <tr>
+            <td>#<%= o.id %></td>
+            <td><%= o.buyer.fullName %></td>
+            <td><%= o.buyer.phone %><br/><span style="color:var(--stone); font-size:12px;"><%= o.buyer.email %></span></td>
+            <td><%= o.items.map(i => i.productName + ' x' + i.quantity).join(', ') %></td>
+            <td><%= formatRWF(o.total) %></td>
+            <td>
+              <span class="badge <%= o.status === 'confirmed' ? 'badge-confirmed' : (o.status === 'cancelled' ? 'badge-cancelled' : 'badge-proceeding') %>">
+                <%= o.status === 'confirmed' ? 'Confirmed' : (o.status === 'cancelled' ? 'Cancelled' : 'Proceeding') %>
+              </span>
+              <% if (o.status === 'confirmed') { %><br/><span class="badge badge-paid" style="margin-top:6px;">Paid</span><% } %>
+            </td>
+            <td style="display:flex; gap:8px;">
+              <% if (o.status === 'proceeding') { %>
+                <form action="/admin/orders/<%= o.id %>/confirm" method="POST">
+                  <button type="submit" class="btn btn-sm btn-primary">Confirm Payment</button>
+                </form>
+                <form action="/admin/orders/<%= o.id %>/cancel" method="POST" onsubmit="return confirm('Cancel this order and restock the bundles?');">
+                  <button type="submit" class="btn btn-sm btn-wine">Cancel</button>
+                </form>
+              <% } else { %>
+                <span style="color:var(--stone); font-size:12px;">No actions</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

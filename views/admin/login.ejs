@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body style="display:flex; align-items:center; justify-content:center; min-height:100vh;">
+  <div class="form-card">
+    <div class="brand" style="margin-bottom:8px;">JayB<span>Shop</span></div>
+    <span class="eyebrow">Restricted Access</span>
+    <h2 style="margin:8px 0 24px;">Admin Portal</h2>
+
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <form action="/admin/login" method="POST">
+      <div class="field">
+        <label>Security Code</label>
+        <input type="password" name="securityCode" autocomplete="off" required autofocus />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Enter Admin Portal</button>
+    </form>
+
+    <p style="text-align:center; margin-top:20px; font-size:13px; color:var(--stone);">
+      <a href="/" style="color:var(--stone); text-decoration:underline;">&larr; Back to the shop</a>
+    </p>
+  </div>
+</body>
+</html>

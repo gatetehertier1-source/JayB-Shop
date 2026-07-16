@@ -1,0 +1,46 @@
+<%- include('partials/header', { title }) %>
+
+<section class="section container">
+  <div class="form-card">
+    <span class="eyebrow">Join JayB Shop</span>
+    <h2 style="margin-bottom:24px;">Create Account</h2>
+
+    <% if (errors && errors.length) { %>
+      <div class="alert alert-error">
+        <% errors.forEach(function(e) { %><div><%= e %></div><% }) %>
+      </div>
+    <% } %>
+
+    <form action="/signup" method="POST" data-loading-text="Creating your account&hellip;">
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" name="fullName" value="<%= form.fullName || '' %>" required />
+      </div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" name="email" value="<%= form.email || '' %>" required />
+      </div>
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="text" name="phone" value="<%= form.phone || '' %>" placeholder="07XXXXXXXX" required />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Password</label>
+          <input type="password" name="password" required />
+        </div>
+        <div class="field">
+          <label>Confirm Password</label>
+          <input type="password" name="confirmPassword" required />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+    </form>
+
+    <p style="text-align:center; margin-top:20px; font-size:14px; color:var(--ivory-dim);">
+      Already have an account? <a href="/login" style="color:var(--brass); text-decoration:underline;">Log in</a>
+    </p>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

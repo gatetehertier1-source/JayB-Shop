@@ -1,0 +1,45 @@
+<%- include('partials/header', { title }) %>
+
+<span class="eyebrow"><%= product ? 'Edit Product' : 'New Product' %></span>
+<h2 style="margin-bottom:24px;"><%= product ? product.name : 'Add a Product' %></h2>
+
+<% if (errors && errors.length) { %>
+  <div class="alert alert-error"><% errors.forEach(function(e) { %><div><%= e %></div><% }) %></div>
+<% } %>
+
+<form action="<%= product && product.id ? '/admin/products/' + product.id + '/edit' : '/admin/products/new' %>" method="POST" style="max-width:640px;">
+  <div class="field">
+    <label>Product Name</label>
+    <input type="text" name="name" value="<%= product ? (product.name || '') : '' %>" required />
+  </div>
+  <div class="field">
+    <label>Category</label>
+    <input type="text" name="category" value="<%= product ? (product.category || '') : '' %>" placeholder="e.g. Shirts, Dresses, Suits" required />
+  </div>
+  <div class="field">
+    <label>Description</label>
+    <textarea name="description"><%= product ? (product.description || '') : '' %></textarea>
+  </div>
+  <div class="field">
+    <label>Image URL (optional)</label>
+    <input type="text" name="imageUrl" value="<%= product ? (product.imageUrl || '') : '' %>" placeholder="https://..." />
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Price per Bundle (RWF)</label>
+      <input type="number" name="pricePerBundle" value="<%= product ? (product.pricePerBundle || '') : '' %>" min="1" required />
+    </div>
+    <div class="field">
+      <label>Pieces per Bundle</label>
+      <input type="number" name="piecesPerBundle" value="<%= product ? (product.piecesPerBundle || '') : '' %>" min="1" required />
+    </div>
+  </div>
+  <div class="field">
+    <label>Bundles in Stock</label>
+    <input type="number" name="bundlesInStock" value="<%= product ? (product.bundlesInStock !== undefined ? product.bundlesInStock : '') : '' %>" min="0" required />
+  </div>
+  <button type="submit" class="btn btn-primary">Save Product</button>
+  <a href="/admin/products" class="btn btn-outline">Cancel</a>
+</form>
+
+<%- include('partials/footer') %>
