@@ -252,15 +252,19 @@ router.get('/settings', (req, res) => {
 });
 
 router.post('/settings', (req, res) => {
-  const { momoNumber, airtelNumber, bankName, bankAccountName, bankAccountNumber, whatsappNumber } = req.body;
+  const { momoNumber, airtelNumber, bankName, bankAccountName, bankAccountNumber, whatsappNumber, themeMode } = req.body;
+  const selectedTheme = ['dark', 'bright', 'mixed'].includes(themeMode) ? themeMode : 'dark';
   db.set('settings', {
     momoNumber: momoNumber || '',
     airtelNumber: airtelNumber || '',
     bankName: bankName || '',
     bankAccountName: bankAccountName || '',
     bankAccountNumber: bankAccountNumber || '',
-    whatsappNumber: whatsappNumber || ''
+    whatsappNumber: whatsappNumber || '',
+    themeMode: selectedTheme
   }).write();
+  res.locals.siteSettings = db.get('settings').value();
+  res.locals.themeMode = selectedTheme;
   res.render('admin/settings', { title: 'Settings — JayB Shop', settings: db.get('settings').value(), saved: true });
 });
 

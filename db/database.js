@@ -116,7 +116,8 @@ db.defaults({
     bankName: 'Bank of Kigali',
     bankAccountName: 'JayB Shop Ltd',
     bankAccountNumber: '00012345678900',
-    whatsappNumber: '250796164748'
+    whatsappNumber: '250796164748',
+    themeMode: 'dark'
   }
 }).write();
 

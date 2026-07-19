@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 
 // ---------- Global template locals ----------
 app.use((req, res, next) => {
+  const siteSettings = db.get('settings').value() || {};
   res.locals.buyer = null;
   if (req.session.buyerId) {
     res.locals.buyer = db.get('buyers').find({ id: req.session.buyerId }).value() || null;
@@ -50,6 +51,10 @@ app.use((req, res, next) => {
   res.locals.isAdmin = !!req.session.isAdmin;
   res.locals.cartCount = (req.session.cart || []).reduce((sum, i) => sum + i.quantity, 0);
   res.locals.currentPath = req.path;
+  res.locals.siteSettings = siteSettings;
+  res.locals.themeMode = ['dark', 'bright', 'mixed', 'dark-bright'].includes(siteSettings.themeMode)
+    ? siteSettings.themeMode
+    : 'dark';
   next();
 });
 

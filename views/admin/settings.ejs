@@ -9,6 +9,33 @@
 
 <form action="/admin/settings" method="POST" style="max-width:640px;">
   <div class="field">
+    <label>Site Theme</label>
+    <div class="theme-options" role="radiogroup" aria-label="Site theme">
+      <label class="theme-option">
+        <input type="radio" name="themeMode" value="dark" <%= (settings.themeMode || 'dark') === 'dark' ? 'checked' : '' %> />
+        <span>
+          <b>Dark</b>
+          <small>Deep charcoal with ivory text.</small>
+        </span>
+      </label>
+      <label class="theme-option">
+        <input type="radio" name="themeMode" value="bright" <%= settings.themeMode === 'bright' ? 'checked' : '' %> />
+        <span>
+          <b>Bright</b>
+          <small>White light mode with dark text.</small>
+        </span>
+      </label>
+      <label class="theme-option">
+        <input type="radio" name="themeMode" value="mixed" <%= settings.themeMode === 'mixed' || settings.themeMode === 'dark-bright' ? 'checked' : '' %> />
+        <span>
+          <b>Mixed</b>
+          <small>White, dark blue, and yellow.</small>
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <div class="field">
     <label>WhatsApp Number (international format, no + or leading 0)</label>
     <input type="text" name="whatsappNumber" value="<%= settings.whatsappNumber %>" placeholder="250796164748" required />
   </div>
