@@ -1,11 +1,27 @@
 // db/database.js
 const path = require('path');
+const fs = require('fs');
+const os = require('os');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const { Client } = require('pg');
 require('dotenv').config();
 
-const dbFile = path.join(__dirname, '..', 'data', 'jayb.json');
+// ---------- Determine a safe writable directory for Vercel ----------
+const isVercel = process.env.VERCEL || process.env.NODE_ENV === 'production';
+const dbFile = isVercel 
+  ? path.join(os.tmpdir(), 'jayb.json') 
+  : path.join(__dirname, '..', 'data', 'jayb.json');
+
+// Ensure the directory/file structurally exists before lowdb opens it to prevent crashes
+const dbDir = path.dirname(dbFile);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+if (!fs.existsSync(dbFile)) {
+  fs.writeFileSync(dbFile, JSON.stringify({}));
+}
+
 const fileAdapter = new FileSync(dbFile);
 
 // 1. We create a custom adapter class that intercepts lowdb's read/write actions
@@ -89,9 +105,9 @@ const db = low(new SupabaseSyncAdapter(fileAdapter));
 
 // ---------- Default shape of the database ----------
 db.defaults({
-  buyers: [],           // registered customers
-  products: [],         // clothing items sold in bundles
-  orders: [],           // buyer orders
+  buyers: [],          // registered customers
+  products: [],        // clothing items sold in bundles
+  orders: [],          // buyer orders
   announcements: [],    // admin announcements
   messages: [],         // contact form submissions
   settings: {
